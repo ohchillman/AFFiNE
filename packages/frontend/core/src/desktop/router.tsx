@@ -35,7 +35,7 @@ export const topLevelRoutes = [
     children: [
       {
         path: '/',
-        lazy: () => import('./pages/index'),
+        loader: () => redirect('/admin/auth'),
       },
       {
         path: '/workspace/:workspaceId/*',
