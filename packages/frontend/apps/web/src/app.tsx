@@ -92,7 +92,24 @@ window.addEventListener('focus', () => {
 });
 frameworkProvider.get(LifecycleService).applicationStart();
 
+
+
+import { GlobalDialogService } from '@affine/core/modules/dialogs';
+
+
+import { useService } from '@toeverything/infra';
+
+
+
+import { useEffect } from 'react';
+
 export function App() {
+  const globalDialogService = useService(GlobalDialogService);
+
+  useEffect(() => {
+    globalDialogService.open('sign-in');
+  }, [globalDialogService]);
+
   return (
     <Suspense>
       <FrameworkRoot framework={frameworkProvider}>
@@ -111,3 +128,36 @@ export function App() {
     </Suspense>
   );
 }
+
+
+
+
+import { useEffect } from 'react';
+
+export function App() {
+  const globalDialogService = frameworkProvider.get(GlobalDialogService);
+
+  useEffect(() => {
+    globalDialogService.open('sign-in');
+  }, [globalDialogService]);
+
+  return (
+    <Suspense>
+      <FrameworkRoot framework={frameworkProvider}>
+        <CacheProvider value={cache}>
+          <I18nProvider>
+            <AffineContext store={getCurrentStore()}>
+              <RouterProvider
+                fallbackElement={<AppContainer fallback />}
+                router={router}
+                future={future}
+              />
+            </AffineContext>
+          </I18nProvider>
+        </CacheProvider>
+      </FrameworkRoot>
+    </Suspense>
+  );
+}
+
+
